@@ -22,11 +22,26 @@ public class Character
   protected int level;
   protected int rank;
 
+  static final int HP_MOD = 0b1000;
+  static final int ATK_MOD = 0b0100;
+  static final int DEF_MOD = 0b0010;
+  static final int SPD_MOD = 0b0001;
+
+  // Keeps track of applied effects during and after dueling sequences
+  protected int effects;
+
+  // Modifiers vary depending on class- true or false for each stat
+  protected int modifiers;
+  protected Map<String, Integer> stats;
+
   // Increments the level of the NPC/Player by 1 and updates the rank value as such
   protected void increaseLevel()
   {
     int currentLvl = level;
     currentLvl++;
+
+    if (currentLvl > 50)
+      return;
 
     if (currentLvl >= 10 && currentLvl < 24)
       rank = 1; // Set Rank to 1
@@ -41,7 +56,7 @@ public class Character
       switch (i)
       {
         case 0:
-          val = modifiers[0]
+          val = ((modifiers & HP_MOD) == HP_MOD)
             ? (int)((Math.random() * 4) + 3) // +(3 -> 6)
             : (int)((Math.random() * 4) + 2); // +(2 -> 5)
           val += stats.get("hp");
@@ -50,7 +65,7 @@ public class Character
           stats.put("current_hp", val);
           break;
         case 1:
-          val = modifiers[1]
+          val = ((modifiers & ATK_MOD) == ATK_MOD)
             ? (int)((Math.random() * 3) + 2) // +(2 -> 4)
             : (int)((Math.random() * 3) + 1); // +(1 -> 3)
           val += stats.get("atk");
@@ -59,7 +74,7 @@ public class Character
           stats.put("temp_atk", val);
           break;
         case 2:
-          val = modifiers[2]
+          val = ((modifiers & DEF_MOD) == DEF_MOD)
             ? (int)((Math.random() * 3) + 2)
             : (int)((Math.random() * 3) + 1);
           val += stats.get("def");
@@ -68,7 +83,7 @@ public class Character
           stats.put("temp_def", val);
           break;
         case 3:
-          val = modifiers[3]
+          val = ((modifiers & SPD_MOD) == SPD_MOD)
             ? (int)((Math.random() * 2) + 2) // +(2 -> 3)
             : (int)((Math.random() * 2) + 1); // +(1 -> 2)
           val += stats.get("spd");
@@ -82,13 +97,8 @@ public class Character
     level = currentLvl;
   }
 
-
-  // Modifiers vary depending on class- true or false for each stat
-  protected static boolean[] modifiers = new boolean[4];
-  protected Map<String, Integer> stats;
-
   // Creates a varied set of base stats based on the type of domain the Character is
-  protected static Map<String, Integer> setStats(boolean[] modifiers)
+  protected static Map<String, Integer> setStats(int modifiers)
   {
     Map<String, Integer> stats = new TreeMap<>();
 
@@ -98,28 +108,28 @@ public class Character
       switch (i)
       {
         case 0:
-          val = modifiers[0]
+          val = ((modifiers & HP_MOD) == HP_MOD)
             ? 15 + (int)((Math.random() * 3) + 3) // 15 + (3 -> 5)
             : 15 + (int)(Math.random() * 3); // 15 + (0 -> 2)
           stats.put("hp", val);
           stats.put("current_hp", val);
           break;
 	      case 1:
-          val = modifiers[1]
+          val = ((modifiers & ATK_MOD) == ATK_MOD)
             ? 7 + (int)((Math.random() * 3) + 1) // 7 + (1 -> 2)
             : 7 + (int)((Math.random() * 3) - 1); // 7 + (-1 -> 1)
           stats.put("atk", val);
           stats.put("temp_atk", val);
           break;
         case 2:
-          val = modifiers[2]
+          val = ((modifiers & DEF_MOD) == DEF_MOD)
             ? 3 + (int)((Math.random() * 3) + 1)
             : 3 + (int)((Math.random() * 3) - 1);
           stats.put("def", val);
           stats.put("temp_def", val);
           break;
         case 3:
-          val = modifiers[3]
+          val = ((modifiers & SPD_MOD) == SPD_MOD)
             ? 10 + (int)(Math.random() * 4) // 10 + (0 -> 3)
             : 10 + (int)((Math.random() * 3) - 1); // 10 + (-1 -> 1)
           stats.put("spd", val);
@@ -138,15 +148,18 @@ public class Character
   {
     level = 1;
     rank = 0;
+    modifiers = 0;
+    effects = 0;
   }
   // Constructor for class after calling one of the 6 domain methods
-  Character(String domain, boolean[] modifiers, Map<String, Integer> stats)
+  Character(String domain, int modifiers, int effects, Map<String, Integer> stats)
   {
     level = 1;
     rank = 0;
 
     this.domain = domain;
     this.modifiers = modifiers;
+    this.effects = effects;
     this.stats = stats;
   }
 }
