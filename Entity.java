@@ -2,95 +2,100 @@ import java.util.*;
 
 public class Entity
 {
+  static final int HP_MOD = 0b1000;
+  static final int ATK_MOD = 0b0100;
+  static final int DEF_MOD = 0b0010;
+  static final int SPD_MOD = 0b0001;
+  
   // Variations of the available Character classes
   protected static final Character ALCHEMIST_CHAR()
   {
     String domain = "Alchemist";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = false; // HP
-    modifiers[1] = true; // ATK
-    modifiers[2] = true; // DEF
-    modifiers[3] = false; // SPD
+    int modifiers = 0;
+    modifiers = modifiers | ATK_MOD;
+    modifiers = modifiers | DEF_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Character(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Character(domain, modifiers, effects, stats);
   }
 
   protected static final Character ENCHANTER_CHAR()
   {
     String domain = "Enchanter";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = false;
-    modifiers[1] = true;
-    modifiers[2] = false;
-    modifiers[3] = true;
+    int modifiers = 0;
+    modifiers = modifiers | ATK_MOD;
+    modifiers = modifiers | SPD_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Character(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Character(domain, modifiers, effects, stats);
   }
 
   protected static final Character SHAMAN_CHAR()
   {
     String domain = "Shaman";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = true;
-    modifiers[1] = false;
-    modifiers[2] = true;
-    modifiers[3] = false;
+    int modifiers = 0;
+    modifiers = modifiers | HP_MOD;
+    modifiers = modifiers | DEF_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Character(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Character(domain, modifiers, effects, stats);
   }
 
   protected static final Character SORCERER_CHAR()
   {
     String domain = "Sorcerer";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = true;
-    modifiers[1] = false;
-    modifiers[2] = false;
-    modifiers[3] = true;
+    int modifiers = 0;
+    modifiers = modifiers | HP_MOD;
+    modifiers = modifiers | SPD_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Character(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Character(domain, modifiers, effects, stats);
   }
 
   protected static final Character WITCH_DOCTOR_CHAR()
   {
     String domain = "Witch Doctor";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = true;
-    modifiers[1] = true;
-    modifiers[2] = false;
-    modifiers[3] = false;
+    int modifiers = 0;
+    modifiers = modifiers | HP_MOD;
+    modifiers = modifiers | ATK_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Character(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Character(domain, modifiers, effects, stats);
   }
 
   protected static final Character WIZARD_CHAR()
   {
     String domain = "Wizard";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = false;
-    modifiers[1] = false;
-    modifiers[2] = true;
-    modifiers[3] = true;
+    int modifiers = 0;
+    modifiers = modifiers | DEF_MOD;
+    modifiers = modifiers | SPD_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Character(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Character(domain, modifiers, effects, stats);
   }
 
 
@@ -99,90 +104,90 @@ public class Entity
   {
     String domain = "Alchemist";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = false; // HP
-    modifiers[1] = true; // ATK
-    modifiers[2] = true; // DEF
-    modifiers[3] = false; // SPD
+    int modifiers = 0;
+    modifiers = modifiers | ATK_MOD;
+    modifiers = modifiers | DEF_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new NonPlayer(domain, modifiers, stats);
+    int effects = 0;
+
+    return new NonPlayer(domain, modifiers, effects, stats);
   }
 
   protected static final NonPlayer ENCHANTER_NPC()
   {
     String domain = "Enchanter";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = false;
-    modifiers[1] = true;
-    modifiers[2] = false;
-    modifiers[3] = true;
+    int modifiers = 0;
+    modifiers = modifiers | ATK_MOD;
+    modifiers = modifiers | SPD_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new NonPlayer(domain, modifiers, stats);
+    int effects = 0;
+
+    return new NonPlayer(domain, modifiers, effects, stats);
   }
 
   protected static final NonPlayer SHAMAN_NPC()
   {
     String domain = "Shaman";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = true;
-    modifiers[1] = false;
-    modifiers[2] = true;
-    modifiers[3] = false;
+    int modifiers = 0;
+    modifiers = modifiers | HP_MOD;
+    modifiers = modifiers | DEF_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new NonPlayer(domain, modifiers, stats);
+    int effects = 0;
+
+    return new NonPlayer(domain, modifiers, effects, stats);
   }
 
   protected static final NonPlayer SORCERER_NPC()
   {
     String domain = "Sorcerer";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = true;
-    modifiers[1] = false;
-    modifiers[2] = false;
-    modifiers[3] = true;
+    int modifiers = 0;
+    modifiers = modifiers | HP_MOD;
+    modifiers = modifiers | SPD_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new NonPlayer(domain, modifiers, stats);
+    int effects = 0;
+
+    return new NonPlayer(domain, modifiers, effects, stats);
   }
 
   protected static final NonPlayer WITCH_DOCTOR_NPC()
   {
     String domain = "Witch Doctor";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = true;
-    modifiers[1] = true;
-    modifiers[2] = false;
-    modifiers[3] = false;
+    int modifiers = 0;
+    modifiers = modifiers | HP_MOD;
+    modifiers = modifiers | ATK_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new NonPlayer(domain, modifiers, stats);
+    int effects = 0;
+
+    return new NonPlayer(domain, modifiers, effects, stats);
   }
 
   protected static final NonPlayer WIZARD_NPC()
   {
     String domain = "Wizard";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = false;
-    modifiers[1] = false;
-    modifiers[2] = true;
-    modifiers[3] = true;
+    int modifiers = 0;
+    modifiers = modifiers | DEF_MOD;
+    modifiers = modifiers | SPD_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new NonPlayer(domain, modifiers, stats);
+    int effects = 0;
+
+    return new NonPlayer(domain, modifiers, effects, stats);
   }
 
 
@@ -191,89 +196,89 @@ public class Entity
   {
     String domain = "Alchemist";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = false; // HP
-    modifiers[1] = true; // ATK
-    modifiers[2] = true; // DEF
-    modifiers[3] = false; // SPD
+    int modifiers = 0;
+    modifiers = modifiers | ATK_MOD;
+    modifiers = modifiers | DEF_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Player(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Player(domain, modifiers, effects, stats);
   }
 
   protected static final Player ENCHANTER_PC()
   {
     String domain = "Enchanter";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = false;
-    modifiers[1] = true;
-    modifiers[2] = false;
-    modifiers[3] = true;
+    int modifiers = 0;
+    modifiers = modifiers | ATK_MOD;
+    modifiers = modifiers | SPD_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Player(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Player(domain, modifiers, effects, stats);
   }
 
   protected static final Player SHAMAN_PC()
   {
     String domain = "Shaman";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = true;
-    modifiers[1] = false;
-    modifiers[2] = true;
-    modifiers[3] = false;
+    int modifiers = 0;
+    modifiers = modifiers | HP_MOD;
+    modifiers = modifiers | DEF_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Player(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Player(domain, modifiers, effects, stats);
   }
 
   protected static final Player SORCERER_PC()
   {
     String domain = "Sorcerer";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = true;
-    modifiers[1] = false;
-    modifiers[2] = false;
-    modifiers[3] = true;
+    int modifiers = 0;
+    modifiers = modifiers | HP_MOD;
+    modifiers = modifiers | SPD_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Player(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Player(domain, modifiers, effects, stats);
   }
 
   protected static final Player WITCH_DOCTOR_PC()
   {
     String domain = "Witch Doctor";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = true;
-    modifiers[1] = true;
-    modifiers[2] = false;
-    modifiers[3] = false;
+    int modifiers = 0;
+    modifiers = modifiers | HP_MOD;
+    modifiers = modifiers | ATK_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Player(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Player(domain, modifiers, effects, stats);
   }
 
   protected static final Player WIZARD_PC()
   {
     String domain = "Wizard";
 
-    boolean[] modifiers = new boolean[4];
-    modifiers[0] = false;
-    modifiers[1] = false;
-    modifiers[2] = true;
-    modifiers[3] = true;
+    int modifiers = 0;
+    modifiers = modifiers | DEF_MOD;
+    modifiers = modifiers | SPD_MOD;
 
     Map<String, Integer> stats = Character.setStats(modifiers);
 
-    return new Player(domain, modifiers, stats);
+    int effects = 0;
+
+    return new Player(domain, modifiers, effects, stats);
   }
 }
