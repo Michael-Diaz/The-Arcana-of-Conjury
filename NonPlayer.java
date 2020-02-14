@@ -45,15 +45,18 @@ public class NonPlayer extends Character
   {
     level = 1;
     rank = 0;
+    modifiers = 0;
+    effects = 0;
   }
 
-  NonPlayer(String domain, boolean[] modifiers, Map<String, Integer> stats)
+  NonPlayer(String domain, int modifiers, int effects, Map<String, Integer> stats)
   {
     level = 1;
     rank = 0;
 
     this.domain = domain;
     this.modifiers = modifiers;
+    this.effects = effects;
     this.stats = stats;
   }
 }
