@@ -17,8 +17,8 @@ public class Character
     return name;
   }
 
-  // Levels are a measure of the player's progress in the game; rank determines the
-  // available services(?) available. Ranks scale with level and are updated as such
+  // Levels are a measure of the player's progress in the game; rank determines
+  // the available services(?). Ranks scale with level and are updated as such
   protected int level;
   protected int rank;
 
@@ -34,7 +34,7 @@ public class Character
   protected int modifiers;
   protected Map<String, Integer> stats;
 
-  // Increments the level of the NPC/Player by 1 and updates the rank value as such
+  // Increments the level of the NPC/Player by 1 and updates the rank value
   protected void increaseLevel()
   {
     int currentLvl = level;
@@ -51,6 +51,15 @@ public class Character
       rank = 3; // Set Rank to 3
 
     int val;
+    val = (rank == 0) ? (int)(Math.random() * 3) // +(0 -> 2)
+          : (rank == 1) ? (int)((Math.random() * 3) + 1) // +(1 -> 3)
+          : (rank == 2) ? (int)((Math.random() * 3) + 2) // +(2 -> 4)
+          : (int)((Math.random() * 3) + 3); // +(3 -> 5)
+    val += stats.get("mp");
+
+    stats.put("mp", val);
+    stats.put("current_mp", val);
+
     for (int i = 0; i < 4; i++)
     {
       switch (i)
@@ -94,15 +103,21 @@ public class Character
       }
     }
 
+
     level = currentLvl;
   }
 
-  // Creates a varied set of base stats based on the type of domain the Character is
+  // Creates a set of base stats based on the type of domain the Character is
   protected static Map<String, Integer> setStats(int modifiers)
   {
     Map<String, Integer> stats = new TreeMap<>();
 
     int val;
+
+    val = 10 + (int)(Math.random() * 6);
+    stats.put("mp", val);
+    stats.put("current_mp", val);
+
     for (int i = 0; i < 4; i++)
     {
       switch (i)
@@ -152,7 +167,9 @@ public class Character
     effects = 0;
   }
   // Constructor for class after calling one of the 6 domain methods
-  Character(String domain, int modifiers, int effects, Map<String, Integer> stats)
+  Character(String domain,
+            int modifiers, int effects,
+            Map<String, Integer> stats)
   {
     level = 1;
     rank = 0;
